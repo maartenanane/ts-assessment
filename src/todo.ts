@@ -38,7 +38,7 @@ export const convertEntity = (entity: Entity, index: number, entities: Entity[])
 };
 
 // HINT: you probably need to pass extra argument(s) to this function to make it performant.
-const convertAnnotation = (annotation: Annotation): ConvertedAnnotation => {
+export const convertAnnotation = (annotation: Annotation): ConvertedAnnotation => {
   throw new Error('Not implemented');
 };
 

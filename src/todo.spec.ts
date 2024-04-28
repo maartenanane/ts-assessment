@@ -2,8 +2,10 @@ import deepEqualinAnyOrder from 'deep-equal-in-any-order';
 import { expect, use } from 'chai';
 import inputJson from './input.json';
 import outputJson from './output.json';
-import { convertEntity, convertInput } from './todo';
-import { Entity, Input } from './types/input';
+import { convertAnnotation, convertEntity, convertInput } from './todo';
+import { Annotation, Entity, Input } from './types/input';
+
+use(deepEqualinAnyOrder);
 
 describe.skip('Todo', () => {
   // TODO: make sure this test passes
@@ -22,11 +24,18 @@ describe.skip('Todo', () => {
 describe('Conversion', () => {
   describe('convertEntity', () => {
     it('Should convert an input entity to a converted entity', () => {
-      use(deepEqualinAnyOrder);
       const entities = inputJson.documents[0].entities as Entity[];
       const convertedEntities = entities.map(convertEntity);
 
       expect(convertedEntities).to.deep.equalInAnyOrder(outputJson.documents[0].entities);
     });
   });
+  describe('convertAnnotation', () => {
+    it('Should convert an input annotation to a converted annotation', () => {
+      const annotations = inputJson.documents[0].annotations as Annotation[];
+      const convertedAnnotations = annotations.map(convertAnnotation);
+
+      expect(convertedAnnotations).to.deep.equalInAnyOrder(outputJson.documents[0].annotations);
+    });
+  })
 });
