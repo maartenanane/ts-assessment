@@ -19,8 +19,22 @@ export const convertInput = (input: Input): Output => {
 };
 
 // HINT: you probably need to pass extra argument(s) to this function to make it performant.
-export const convertEntity = (entity: Entity): ConvertedEntity => {
-  throw new Error('Not implemented');
+export const convertEntity = (entity: Entity, index: number, entities: Entity[]): ConvertedEntity => {
+  let convertedEntity = {
+    id: entity.id,
+    name: entity.name,
+    type: entity.type,
+    class: entity.class,
+    children: [] as ConvertedEntity[]
+  }
+
+  const children = entities.filter(childEntity => childEntity.refs.includes(entity.id));
+  if (children.length > 0) {
+    convertedEntity.children = children.map(childEntity => convertEntity(childEntity, index, entities));
+  }
+
+  return convertedEntity;
+
 };
 
 // HINT: you probably need to pass extra argument(s) to this function to make it performant.
