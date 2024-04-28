@@ -8,7 +8,7 @@ export const convertInput = (input: Input): Output => {
   const documents = input.documents.map((document) => {
     // TODO: map the entities to the new structure and sort them based on the property "name"
     // Make sure the nested children are also mapped and sorted
-    const entities = document.entities.map(convertEntity).sort(sortEntities);
+    const entities = sortEntities(document.entities.map(convertEntity));
 
     // TODO: map the annotations to the new structure and sort them based on the property "index"
     // Make sure the nested children are also mapped and sorted
@@ -70,9 +70,15 @@ export const convertAnnotation = (annotation: Annotation, index: number, annotat
   return convertedAnnotation;
 };
 
-const sortEntities = (entityA: ConvertedEntity, entityB: ConvertedEntity) => {
-  throw new Error('Not implemented');
-};
+const sortEntitiesByName = (entityA: ConvertedEntity, entityB: ConvertedEntity) => entityA.name.localeCompare(entityB.name);
+export const sortEntities = (entities: ConvertedEntity[]) => {
+  entities.sort(sortEntitiesByName).forEach(entity => {
+    if (entity.children) {
+      sortEntities(entity.children);
+    }
+  });
+  return entities;
+}
 
 const sortAnnotations = (annotationA: ConvertedAnnotation, annotationB: ConvertedAnnotation) => {
   throw new Error('Not implemented');
