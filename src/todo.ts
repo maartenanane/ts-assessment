@@ -19,7 +19,7 @@ export const convertInput = (input: Input): Output => {
 };
 
 // HINT: you probably need to pass extra argument(s) to this function to make it performant.
-const convertEntity = (entity: Entity): ConvertedEntity => {
+export const convertEntity = (entity: Entity): ConvertedEntity => {
   throw new Error('Not implemented');
 };
 

@@ -1,8 +1,9 @@
-import { expect } from 'chai';
+import deepEqualinAnyOrder from 'deep-equal-in-any-order';
+import { expect, use } from 'chai';
 import inputJson from './input.json';
 import outputJson from './output.json';
-import { convertInput } from './todo';
-import { Input } from './types/input';
+import { convertEntity, convertInput } from './todo';
+import { Entity, Input } from './types/input';
 
 describe('Todo', () => {
   // TODO: make sure this test passes
@@ -16,4 +17,16 @@ describe('Todo', () => {
   });
 
   // BONUS: Write tests that validates the output json. Use the function you have written in "src/todo.ts".
+});
+
+describe('Conversion', () => {
+  describe('convertEntity', () => {
+    it('Should convert an input entity to a converted entity', () => {
+      use(deepEqualinAnyOrder);
+      const entities = inputJson.documents[0].entities as Entity[];
+      const convertedEntities = entities.map(convertEntity);
+
+      expect(convertedEntities).to.deep.equalInAnyOrder(outputJson.documents[0].entities);
+    });
+  });
 });
