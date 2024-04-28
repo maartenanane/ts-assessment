@@ -12,7 +12,7 @@ export const convertInput = (input: Input): Output => {
 
     // TODO: map the annotations to the new structure and sort them based on the property "index"
     // Make sure the nested children are also mapped and sorted
-    const annotations = annotationConversion(document.annotations, document.entities).sort(sortAnnotations);
+    const annotations = sortAnnotations(annotationConversion(document.annotations, document.entities));
 
     return { id: document.id, entities, annotations };
   });
@@ -71,17 +71,27 @@ export const convertAnnotation = (annotation: Annotation, index: number, annotat
 };
 
 const sortEntitiesByName = (entityA: ConvertedEntity, entityB: ConvertedEntity) => entityA.name.localeCompare(entityB.name);
+
 export const sortEntities = (entities: ConvertedEntity[]) => {
   entities.sort(sortEntitiesByName).forEach(entity => {
     if (entity.children) {
       sortEntities(entity.children);
     }
   });
+  
   return entities;
 }
 
-const sortAnnotations = (annotationA: ConvertedAnnotation, annotationB: ConvertedAnnotation) => {
-  throw new Error('Not implemented');
+const sortAnnotationsByIndex = (annotationA: ConvertedAnnotation, annotationB: ConvertedAnnotation) => annotationA.index - annotationB.index;
+
+export const sortAnnotations = (annotations: ConvertedAnnotation[]) => {
+  annotations.sort(sortAnnotationsByIndex).forEach(annotation => {
+    if (annotation.children) {
+      sortAnnotations(annotation.children);
+    }
+  });
+
+  return annotations;
 };
 
 // BONUS: Create validation function that validates the result of "convertInput". Use yup as library to validate your result.
