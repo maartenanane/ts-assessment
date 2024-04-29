@@ -4,7 +4,7 @@ export interface Output {
   documents: Array<ConvertedDocument>;
 }
 
-interface ConvertedDocument {
+export interface ConvertedDocument {
   id: string;
   entities: ConvertedEntity[];
   annotations: ConvertedAnnotation[];

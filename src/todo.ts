@@ -1,5 +1,6 @@
-import { Annotation, Entity, Input } from './types/input';
-import { ConvertedAnnotation, ConvertedEntity, Output } from './types/output';
+import { ObjectSchema, array, lazy, mixed, number, object, string } from 'yup';
+import { Annotation, Entity, EntityClass, EntityType, Input } from './types/input';
+import { ConvertedAnnotation, ConvertedEntity, Output, ConvertedDocument } from './types/output';
 import _ from 'lodash';
 
 export const convertInput = (input: Input): Output => {
@@ -61,7 +62,7 @@ export const sortEntities = (entities: ConvertedEntity[]) => {
       sortEntities(entity.children);
     }
   });
-  
+
   return entities;
 }
 
@@ -78,3 +79,28 @@ export const sortAnnotations = (annotations: ConvertedAnnotation[]) => {
 };
 
 // BONUS: Create validation function that validates the result of "convertInput". Use yup as library to validate your result.
+export const validateOutput = (output: Output) : boolean => {
+  //NOT FINISHED
+
+  // let convertedDocumentSchema: ObjectSchema<ConvertedDocument> = object({
+  //   id: string().required(),
+  //   entities: object<ConvertedEntity>({
+  //     id: string().required(),
+  //     name: string().required(),
+  //     type: mixed<EntityType>().oneOf(Object.values(EntityType)).required(),
+  //     class: mixed<EntityClass>().oneOf(Object.values(EntityClass)).required(),
+  //     children: array<ConvertedEntity>()
+  //     }),
+  //   annotations: object({
+  //     id: string().required(),
+  //     entity: object({
+  //       id: string().required(),
+  //       name: string().required(),
+  //     }),
+  //     value: mixed().oneOf([string(), number()]).nullable().required(),
+  //     index: number().required(),
+  //     children: array<ConvertedAnnotation>()
+  //   })
+  // });
+  return true;
+}
